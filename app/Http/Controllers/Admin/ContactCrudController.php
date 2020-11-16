@@ -128,6 +128,7 @@ class ContactCrudController extends CrudController
 
     public function store()
     {
+        $request = $this->crud->validateRequest();
         $account_id = $this->accountRepo->create(request());
         $contact = request()->toArray();
         $contact['account_id'] = $account_id;
@@ -139,6 +140,7 @@ class ContactCrudController extends CrudController
 
     public function update()
     {
+        $request = $this->crud->validateRequest();
         $this->accountRepo->update(request());
         $this->contactRepo->update(request());
 
