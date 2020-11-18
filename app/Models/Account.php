@@ -35,11 +35,6 @@ class Account extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function contact()
-    {
-        return $this->belongsToMany('App\Models\Contact');
-    }
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES

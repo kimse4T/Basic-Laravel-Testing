@@ -35,11 +35,6 @@ class Contact extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function account()
-    {
-        return $this->hasOne('App\Models\Account','id','account_id');
-    }
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES

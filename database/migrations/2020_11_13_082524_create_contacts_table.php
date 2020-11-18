@@ -19,7 +19,6 @@ class CreateContactsTable extends Migration
             $table->string('last_name');
             $table->string('phone');
             $table->string('address');
-            $table->unsignedBigInteger('account_id');
             $table->timestamps();
         });
     }

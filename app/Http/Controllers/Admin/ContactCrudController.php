@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ContactRequest;
-use App\Models\Account;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use App\Repositories\AccountRepository;
-use App\Repositories\ContactRepository;
 
 /**
  * Class ContactCrudController
@@ -17,8 +14,8 @@ use App\Repositories\ContactRepository;
 class ContactCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -37,8 +34,6 @@ class ContactCrudController extends CrudController
         CRUD::setModel(\App\Models\Contact::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/contact');
         CRUD::setEntityNameStrings('contact', 'contacts');
-        $this->accountRepo = resolve(AccountRepository::class);
-        $this->contactRepo = resolve(ContactRepository::class);
     }
 
     /**
@@ -104,15 +99,6 @@ class ContactCrudController extends CrudController
                 'class' => 'form-group col-md-6'
             ]
         ]);
-
-        $this->crud->addField([
-            'name'      => 'account_name',
-            'label'     => 'Account Name',
-            'type'      => 'text_account',
-            'wrapperAttributes' => [
-                'class' => 'form-group col-md-6'
-            ]
-        ]);
     }
 
     /**
@@ -124,26 +110,5 @@ class ContactCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-
-    public function store()
-    {
-        $request = $this->crud->validateRequest();
-        $account_id = $this->accountRepo->create(request());
-        $contact = request()->toArray();
-        $contact['account_id'] = $account_id;
-
-        $this->contactRepo->create($contact);
-
-        return redirect(route('contact.index'));
-    }
-
-    public function update()
-    {
-        $request = $this->crud->validateRequest();
-        $this->accountRepo->update(request());
-        $this->contactRepo->update(request());
-
-        return redirect(route('contact.index'));
     }
 }

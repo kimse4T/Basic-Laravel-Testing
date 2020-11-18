@@ -30,7 +30,6 @@ class ContactRequest extends FormRequest
             'last_name' => 'required|min:2|max:50',
             'phone' => 'required',
             'address' => 'required',
-            'account_name' => 'required'
         ];
     }
 
