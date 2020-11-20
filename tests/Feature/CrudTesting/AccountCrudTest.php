@@ -20,6 +20,8 @@ class AccountCrudTest extends TestCase
     {
         $response = $this->get(route('account.index'));
 
+        //dd($response['getEntries']);
+
         $response->assertViewIs('crud::list');
     }
 
