@@ -15,12 +15,17 @@ class AccountCrudTest extends TestCase
         $this->post('/admin/login',['email'=>'dev@dev.com','password'=>'123456789']);
     }
 
-    /** @test */
+
     public function listAllAccounts()
     {
+        $accounts = factory(Account::class)->create()->toArray();
+
         $response = $this->get(route('account.index'));
 
+        $responseData = $response['crud']->getEntries()->toArray();
+
         $response->assertViewIs('crud::list');
+        $this->assertTrue($accounts==end($responseData));
     }
 
     /** @test */
