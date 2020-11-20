@@ -18,9 +18,8 @@ class AccountCrudTest extends TestCase
     /** @test */
     public function listAllAccounts()
     {
+        //$account = factory(Account::class)->create();
         $response = $this->get(route('account.index'));
-
-        //dd($response['getEntries']);
 
         $response->assertViewIs('crud::list');
     }
